@@ -1,0 +1,44 @@
+namespace WindowsFormsApp2
+{
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+            
+        }
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "database1DataSet.Table". При необходимости она может быть перемещена или удалена.
+            this.tableTableAdapter.Fill(this.database1DataSet.Table);
+        }
+
+        private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2.ActiveForm.Hide();
+            Form3 MyF2 = new Form3();
+            MyF2.ShowDialog();
+            Close();
+        }
+
+        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить запись?", "ВНИМАНИЕ", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                try
+                {
+                    dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                    tableTableAdapter.Update(database1DataSet);
+                    MessageBox.Show("Данные удалены");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+}
